@@ -5,20 +5,20 @@ class Echiquier:
         self.taille = t
         self.tableau = [[False for _ in range(t)] for _ in range(t)]
 
-    def placerReine(self, ligne, colone):
-        self.tableau[ligne][colone] = True
+    def placerReine(self, ligne, colonne):
+        self.tableau[ligne][colonne] = True
 
-    def enleverReine(self, ligne, colone):
-        self.tableau[ligne][colone] = False
+    def enleverReine(self, ligne, colonne):
+        self.tableau[ligne][colonne] = False
 
-    def estPositionValide(self, ligne, colone):
+    def estPositionValide(self, ligne, colonne):
         # Vérifier ligne
         for i in range(self.taille):
             if self.tableau[ligne][i]:
                 return False
 
             # Vérifier diagonale gauche croissante
-        i, j = ligne, colone
+        i, j = ligne, colonne
         while i >= 0 and j >= 0:
             if self.tableau[i][j]:
                 return False
@@ -26,7 +26,7 @@ class Echiquier:
             j -= 1
 
             # Vérifier diagonale droite croissante
-        i, j = ligne, colone
+        i, j = ligne, colonne
         while i >= 0 and j < self.taille:
             if self.tableau[i][j]:
                 return False
