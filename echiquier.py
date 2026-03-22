@@ -34,3 +34,8 @@ class Echiquier:
             j += 1
 
         return True
+    
+    def copier(self):
+        nouveau = Echiquier(self.taille)
+        nouveau.tableau = [row[:] for row in self.tableau]
+        return nouveau
