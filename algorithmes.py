@@ -1,27 +1,34 @@
 def backtracking(echiquier, colonne=0, stats=None):
-
-    if stats is None:
-        stats = {"itérations": 0}
-
-    stats["itérations"] += 1
     
+    if stats is None:
+        stats = Stats()
+
+    stats.backtracking_iterations += 1
+
     n = echiquier.taille
 
     #Si toutes les reines sont placées
     if colonne >= n:
-        return True
+        return True, stats
     
     #Essayer de placer une reine dans chaque ligne de cette colonne
     for ligne in range(n):
-        if echiquier.EstPositionValide(ligne, colonne):
+        if echiquier.estPositionValide(ligne, colonne):
             echiquier.placerReine(ligne, colonne)
 
             #Appel récursif pour la colonne suivante
-            if backtracking(echiquier, colonne + 1):
-                return True
+            success, stats = backtracking(echiquier, colonne + 1, stats)
+            if success:
+                return True, stats
             
             #backtrack si suite échoue
             echiquier.enleverReine(ligne, colonne)
     
     #Si aucune position possible dans cette colonne
-    return False
+    return False, stats
+
+
+# Pour compter les itérations des algorithmes
+class Stats:
+    def __init__(self):
+        self.backtracking_iterations = 0

@@ -34,9 +34,3 @@ class Echiquier:
             j += 1
 
         return True
-
-    def printEchiquierTexte(self):
-        for i in range(self.taille):
-            for j in range(self.taille):
-                print("X" if self.tableau[i][j] else "0", end="")
-            print()
