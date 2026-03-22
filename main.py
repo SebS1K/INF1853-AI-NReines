@@ -2,16 +2,14 @@ import time
 from echiquier import Echiquier
 from algorithmes import backtracking
 
-def run_test(n):
-    print(f"\n=== Test n = {n} ===")
+def executer(nom, fonction, n):
+    print(f"\n=== {nom} | n = {n} ===")
     echiquier = Echiquier(n)
 
     debut= time.perf_counter()
-
-    success, stats = backtracking(echiquier)
-
+    success, stats = fonction(echiquier)
     fin = time.perf_counter()
-
+    
     temps = fin - debut
 
     if success:
@@ -19,12 +17,26 @@ def run_test(n):
     else:
         print("Aucune solution")
 
-    print(f"n={n} | temps={temps:.6f}s | itérations={stats.backtracking_iterations}")
+    print(f"temps={temps:.6f}s | itérations={stats.iterations}")
+
+    return {
+        "nom" : nom,
+        "temps" : temps,
+        "iterations" : stats.iterations,
+        "success" : success
+    }
 
 
 def main():
-    for n in [4, 8, 16]:
-        run_test(n)
+    n = 8
+
+    resultats = []
+
+    resultats.append(executer("Backtracking", backtracking, n))
+
+    print("\n=== RÉSULTATS ===")
+    for r in resultats:
+        print(f"{r['nom']} | {r['temps']:.6f}s | {r['iterations']} itérations")
 
 if __name__ == "__main__":
     main()

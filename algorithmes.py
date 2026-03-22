@@ -3,7 +3,7 @@ def backtracking(echiquier, colonne=0, stats=None):
     if stats is None:
         stats = Stats()
 
-    stats.backtracking_iterations += 1
+    stats.iterations += 1
 
     n = echiquier.taille
 
@@ -31,4 +31,4 @@ def backtracking(echiquier, colonne=0, stats=None):
 # Pour compter les itérations des algorithmes
 class Stats:
     def __init__(self):
-        self.backtracking_iterations = 0
+        self.iterations = 0
