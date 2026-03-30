@@ -1,3 +1,5 @@
+import random
+
 class Echiquier:
     def __init__(self, t):
 
@@ -39,3 +41,29 @@ class Echiquier:
         nouveau = Echiquier(self.taille)
         nouveau.tableau = [row[:] for row in self.tableau]
         return nouveau
+    
+    def initialiserAleatoire(self):
+        self.tableau = [[False for _ in range(self.taille)] for _ in range(self.taille)]
+
+        for col in range(self.taille):
+            ligne_aleatoire = random.randint(0, self.taille - 1)
+            self.placerReine(ligne_aleatoire, col)
+
+    def compterConflits(self):
+        conflits = 0
+        reines = []
+
+        for r in range(self.taille):
+            for c in range(self.taille):
+                if self.tableau[r][c]:
+                    reines.append((r, c))
+                
+        for i in range(len(reines)):
+            for j in range(i + 1, len(reines)):
+                r1, c1 = reines[i]
+                r2, c2 = reines[j]
+
+                if r1 == r2 or abs(r1 - r2) == abs(c1 - c2):
+                    conflits += 1
+                
+        return conflits
