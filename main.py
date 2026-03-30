@@ -28,10 +28,11 @@ def executer(nom, fonction, n):
 
 
 def main():
-    n = 8
+    n = 24
 
     resultats = []
 
+    resultats.append(executer("Backtracking", backtracking, n))
     resultats.append(executer("Hill Climbing avec random restart", hill_climbing, n))
 
     print("\n=== RÉSULTATS ===")
