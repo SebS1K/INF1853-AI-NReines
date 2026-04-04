@@ -1,3 +1,5 @@
+import random 
+
 def backtracking(echiquier, colonne=0, stats=None):
     
     if stats is None:
@@ -80,9 +82,71 @@ def hill_climbing(echiquier, stats=None):
                 break
 
 
+def min_conflicts(echiquier, stats = None, etape_max = None):
+    if stats is None:
+        stats = Stats()
+    
+    n = echiquier.taille
 
+    #Initialisation aléatoire
+    echiquier.initialiserAleatoire()
 
+    if etape_max is None:
+        etape_max = n * 10  # Scale with board size
+
+    #Limitation sur le nombre d'étape pour ne pas tomber dans une boucle
+    for etape in range(etape_max):
+        stats.iterations += 1
+
+        if echiquier.compterConflits() == 0 : 
+            return True, stats
+        
+        #col = random.randint(0, n-1)
+        colonnes_conflictuelles = []
+        for col in range(n):
+            for ligne in range(n):
+                if echiquier.tableau[ligne][col]:
+                    if echiquier.compterConflitsPourCase(ligne, col) > 0:
+                        colonnes_conflictuelles.append(col)
+                    break
+
+        # Choisir UNE colonne conflictuelle au hasard
+        col = random.choice(colonnes_conflictuelles)
+
+        
+        for ligne in range(n):
+            if echiquier.tableau[ligne][col]:
+                ligne_actuelle = ligne
+                break
+
+        min_conflits = float('inf') # Initialisé à l'infini
+        meilleures_lignes = []      # Liste vide pour stocker les égalités
+
+        # 1. On teste toutes les lignes pour cette colonne
+        for ligne_test in range(n):
+            nb_conflits = echiquier.compterConflitsPourCase(ligne_test, col)
+            
+            # 2. Si on trouve un NOUVEAU record absolu (strictement inférieur)
+            if nb_conflits < min_conflits:
+                min_conflits = nb_conflits
+                meilleures_lignes = [ligne_test] # On écrase la liste avec cette seule ligne
+                
+            # 3. Si on trouve une ÉGALITÉ avec le record actuel
+            elif nb_conflits == min_conflits:
+                meilleures_lignes.append(ligne_test) # On ajoute cette ligne à la liste
+
+        # 4. On choisit une ligne au hasard parmi les meilleures trouvées
+        nouvelle_ligne = random.choice(meilleures_lignes)
+
+        # 5. On met à jour l'échiquier (le déplacement)
+        # On enlève la reine de son ancienne position
+        echiquier.tableau[ligne_actuelle][col] = False 
+        # On la place sur la nouvelle position
+        echiquier.tableau[nouvelle_ligne][col] = True
+        # Si on arrive ici, c'est que la boucle a fait ses 100 tours sans succès.
+    return False, stats
 # Pour compter les itérations des algorithmes
 class Stats:
     def __init__(self):
         self.iterations = 0
+

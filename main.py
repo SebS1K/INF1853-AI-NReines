@@ -1,6 +1,6 @@
 import time
 from echiquier import Echiquier
-from algorithmes import backtracking, hill_climbing
+from algorithmes import backtracking, hill_climbing, min_conflicts
 
 def executer(nom, fonction, n):
     print(f"\n=== {nom} | n = {n} ===")
@@ -28,12 +28,13 @@ def executer(nom, fonction, n):
 
 
 def main():
-    n = 24
+    n = 200
 
     resultats = []
 
-    resultats.append(executer("Backtracking", backtracking, n))
-    resultats.append(executer("Hill Climbing avec random restart", hill_climbing, n))
+    #resultats.append(executer("Backtracking", backtracking, n))
+    #resultats.append(executer("Hill Climbing avec random restart", hill_climbing, n))
+    resultats.append(executer("Min-Conflits", min_conflicts, n))
 
     print("\n=== RÉSULTATS ===")
     for r in resultats:
