@@ -68,27 +68,28 @@ class Echiquier:
                 
         return conflits
     
-
+    # Méthode pour compter les conflits d'une case avec les reines des autres colonnes
     def compterConflitsPourCase(self, ligne_test, col_test):
+
         conflits = 0
     
         # On parcourt toutes les autres colonnes
-        for c in range(self.taille):
-            # On ignore la colonne de la reine qu'on est en train de déplacer
-            if c == col_test:
+        for colonne in range(self.taille):
+
+            # On ignore la colonne de la case qu'on est en train de d'analyser
+            if colonne == col_test:
                 continue
             
-            # On cherche où est la reine dans cette autre colonne 'c'
-            r = -1
+            # On cherche où est la reine dans cette autre colonne 
+            reine_ligne = -1
             for ligne_recherche in range(self.taille):
-                if self.tableau[ligne_recherche][c]:
-                    r = ligne_recherche
+                if self.tableau[ligne_recherche][colonne]:
+                    reine_ligne = ligne_recherche
                     break
                 
-            # S'il y a bien une reine dans cette colonne, on vérifie si elle attaque notre case
-            if r != -1:
-                # Même ligne OU même diagonale
-                if r == ligne_test or abs(r - ligne_test) == abs(c - col_test):
+            # On vérifie si elle attaque notre case sur la même ligne ou la même diagonale
+            if reine_ligne != -1:
+                if reine_ligne == ligne_test or abs(reine_ligne - ligne_test) == abs(colonne - col_test):
                     conflits += 1
-                
+
         return conflits
