@@ -28,7 +28,7 @@ def executer(nom, fonction, n):
 
 
 def main():
-    n = 20
+    n = 25
 
     resultats = []
 
