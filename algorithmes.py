@@ -1,34 +1,36 @@
 import random 
 
-def backtracking(echiquier, colonne=0, stats=None):
+# Pour compter les itérations des algorithmes
+class Stats:
+    def __init__(self):
+        self.iterations = 0
+
+# On met stats en 2e position pour correspondre à l'appel du main
+def backtracking(echiquier, stats=None, colonne=0):
     
     if stats is None:
         stats = Stats()
 
     stats.iterations += 1
-
     n = echiquier.taille
 
-    #Si toutes les reines sont placées
+    # Maintenant 'colonne' sera bien 0 au début, et non l'objet Stats
     if colonne >= n:
         return True, stats
     
-    #Essayer de placer une reine dans chaque ligne de cette colonne
     for ligne in range(n):
         if echiquier.estPositionValide(ligne, colonne):
             echiquier.placerReine(ligne, colonne)
 
-            #Appel récursif pour la colonne suivante
-            success, stats = backtracking(echiquier, colonne + 1, stats)
+            # ATTENTION : Ici aussi, on change l'ordre de l'appel récursif
+            success, stats = backtracking(echiquier, stats, colonne + 1)
+            
             if success:
                 return True, stats
             
-            #backtrack si suite échoue
             echiquier.enleverReine(ligne, colonne)
     
-    #Si aucune position possible dans cette colonne
     return False, stats
-
 
 def hill_climbing(echiquier, stats=None):
     if stats is None:
@@ -145,9 +147,3 @@ def min_conflits(echiquier, stats=None, etape_max=None):
             
         # Si la boucle 'for' se termine sans faire de 'return True', 
         # on arrive ici. Le 'while True' va alors relancer une nouvelle initialisation !
-
-# Pour compter les itérations des algorithmes
-class Stats:
-    def __init__(self):
-        self.iterations = 0
-
