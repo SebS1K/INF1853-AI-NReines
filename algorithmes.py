@@ -36,19 +36,23 @@ def hill_climbing(echiquier, stats=None):
     
     n = echiquier.taille
 
+    #initiliser l'échiquier avec une configuration aléatoire
     while True:
         echiquier.initialiserAleatoire()
         current_h = echiquier.compterConflits()
         
+        #début de l'algorithme de hill climbing
         while True:
             stats.iterations += 1
             
+            #Si on a trouvé une solution sans conflits
             if current_h == 0:
                 return True, stats
 
             meilleur_h = current_h
             meilleur_mouvement = None
 
+            #tester tous les voisins
             for col in range(n):
                 ligne_actuelle = -1
                 for l in range(n):
@@ -56,22 +60,27 @@ def hill_climbing(echiquier, stats=None):
                         ligne_actuelle = l
                         break
                 
+                #Tester tous les mouvements possibles pour cette reine
                 for ligne_test in range(n):
                     if ligne_test == ligne_actuelle:
                         continue
 
+                    #mouvement temporaire
                     echiquier.enleverReine(ligne_actuelle, col)
                     echiquier.placerReine(ligne_test, col)
 
                     h_voisin = echiquier.compterConflits()
 
+                    #si nouveau h meilleur
                     if h_voisin < meilleur_h:
                         meilleur_h = h_voisin
                         meilleur_mouvement = (ligne_test, col, ligne_actuelle)
 
+                    #annuler pour tester le prochain mouvement
                     echiquier.enleverReine(ligne_test, col)
                     echiquier.placerReine(ligne_actuelle, col)
 
+            #Si on a trouvé meilleur
             if meilleur_mouvement:
                 l_new, c, l_old = meilleur_mouvement
                 echiquier.enleverReine(l_old, c)

@@ -42,6 +42,8 @@ class Echiquier:
         nouveau.tableau = [row[:] for row in self.tableau]
         return nouveau
     
+    #Méthodes pour l'algorithme de hill climbing
+    #Initialiser l'échiquier avec une configuration aléatoire
     def initialiserAleatoire(self):
         self.tableau = [[False for _ in range(self.taille)] for _ in range(self.taille)]
 
@@ -49,6 +51,7 @@ class Echiquier:
             ligne_aleatoire = random.randint(0, self.taille - 1)
             self.placerReine(ligne_aleatoire, col)
 
+    #Compter le nombre de conflits
     def compterConflits(self):
         conflits = 0
         reines = []
