@@ -70,3 +70,29 @@ class Echiquier:
                     conflits += 1
                 
         return conflits
+    
+    # Fonction pour compter les conflits d'une case avec les reines des autres colonnes pour l'algo Min-Conflits
+    def compterConflitsPourCase(self, ligne_test, col_test):
+
+        conflits = 0
+    
+        # Parcours de toutes les autres colonnes de l'échiquier
+        for colonne in range(self.taille):
+
+          
+            if colonne == col_test:
+                continue
+            
+            # Recherche de la position de la reine dans la colonne évaluée
+            reine_ligne = -1
+            for ligne_recherche in range(self.taille):
+                if self.tableau[ligne_recherche][colonne]:
+                    reine_ligne = ligne_recherche
+                    break
+                
+            # Vérification des attaques sur la même ligne ou les diagonales
+            if reine_ligne != -1:
+                if reine_ligne == ligne_test or abs(reine_ligne - ligne_test) == abs(colonne - col_test):
+                    conflits += 1
+
+        return conflits
