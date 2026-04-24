@@ -2,6 +2,7 @@ import time
 from echiquier import Echiquier
 from algorithmes import backtracking, hill_climbing, min_conflits
 
+# Fonction servant à executer l'algorithme spécifié
 def executer(nom, fonction, n):
     print(f"\n=== {nom} | n = {n} ===")
     echiquier = Echiquier(n)
@@ -27,6 +28,9 @@ def executer(nom, fonction, n):
     }
 
 
+# Si vous souhaitez ajouter, retirer ou modifier les algorithmes sélectionnés, vous pouvez
+# le faire entre la ligne 37 et 41. 
+# Pour augmenter ou diminuer la taille des échiquiers, modifier le {n} à la ligne 35
 def main():
     n = 20
 
